@@ -14,6 +14,7 @@
 
 <script setup>
 
+useHead({title: 'Home'})
 
 const products = [
   { id: 1, name: 'Ring A', price: 199, image: '/placeholder.png' },

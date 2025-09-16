@@ -6,8 +6,6 @@
 </template>
 
 <script setup>
+useHead({ title: 'Products'})
 
 </script>
-
-<style scoped>
-</style>

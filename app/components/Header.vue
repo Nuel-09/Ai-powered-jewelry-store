@@ -3,7 +3,6 @@
     <h1 class="text-xl font-bold text-gray-800">Precious Moments</h1>
     <ul class="flex space-x-6 text-gray-700 font-medium">
       <li><NuxtLink to="/">Home</NuxtLink></li>
-      <li><NuxtLink to="/gallery">Gallery</NuxtLink></li>
       <li><NuxtLink to="/products">Products</NuxtLink></li>
       <li><NuxtLink to="/about">About</NuxtLink></li>
       <li><NuxtLink to="/contact">Contact</NuxtLink></li>

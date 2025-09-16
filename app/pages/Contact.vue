@@ -6,8 +6,5 @@
 </template>
 
 <script setup>
-
+useHead({title: 'Contacts'})
 </script>
-
-<style scoped>
-</style>
