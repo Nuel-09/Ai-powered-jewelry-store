@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import { products } from '@/assets/data/products'
+useHead({title: 'Home'})
+const featuredProducts = products.slice(0, 4) 
+</script>
+
+
+
 <template>
   <div>
     <Header />
@@ -11,18 +19,4 @@
     </div>
   </div>
 </template>
-
-<script setup>
-
-useHead({title: 'Home'})
-
-const products = [
-  { id: 1, name: 'Ring A', price: 199, image: '/placeholder.png' },
-  { id: 2, name: 'Ring B', price: 249, image: '/placeholder.png' },
-  { id: 3, name: 'Ring C', price: 299, image: '/placeholder.png' },
-  { id: 4, name: 'Ring D', price: 349, image: '/placeholder.png' }
-]
-
-const featuredProducts = products.slice(0, 3)
-</script>
 
