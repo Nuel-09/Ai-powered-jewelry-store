@@ -11,7 +11,7 @@
     </section>
 </template>
 <script setup lang="ts">
-import type { Product } from '@/assets/data/products';
+import type { Product } from '~/types/product';
 const props= defineProps({
     products: {
         type: Array as PropType<Product[]>

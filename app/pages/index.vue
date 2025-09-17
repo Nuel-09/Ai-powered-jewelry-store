@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { products } from '@/assets/data/products'
+import { products } from '~/data/products'
 useHead({title: 'Home'})
-const featuredProducts = products.slice(0, 4) 
+const featuredProducts = products.slice(0, 6) 
+fetch("/api")
 </script>
 
 
