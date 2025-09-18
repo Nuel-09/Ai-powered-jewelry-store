@@ -135,8 +135,9 @@ const visible = computed(() => {
       filters.tags.length === 0 ||
       filters.tags.some((t: string) => normalized.includes(t.trim().toLowerCase()))
     const termsOk = matchesText(p, filters.terms, filters.includeDescription)
-    const keep = priceOk && tagsOk && termsOk
-    if (!keep) console.log('Filtered out:', p.name, { priceOk, tagsOk, termsOk, productTags: p.tags, filterTags: filters.tags })
+    const textOrTagsOk = tagsOk || termsOk
+    const keep = priceOk && textOrTagsOk // price is mandatory
+    if (!keep) console.log('Filtered out:', p.name, { priceOk, tagsOk, termsOk, textOrTagsOk, productTags: p.tags, filterTags: filters.tags })
     return keep
   })
   console.log('Filtered results count:', out.length)

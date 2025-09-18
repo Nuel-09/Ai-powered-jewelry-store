@@ -99,10 +99,11 @@
         filters.tags.length === 0 ||
         filters.tags.some((t: string) => normalized.includes(t.trim().toLowerCase()))
     const termsOk = matchesText(p, filters.terms, filters.includeDescription)
-    
-    console.log(`Product ${p.name}:`, { priceOk, tagsOk, termsOk, tags: p.tags, filterTags: filters.tags })
-    
-    return priceOk && tagsOk && termsOk
+    const textOrTagsOk = tagsOk || termsOk
+
+    console.log(`Product ${p.name}:`, { priceOk, tagsOk, termsOk, textOrTagsOk, tags: p.tags, filterTags: filters.tags })
+
+    return priceOk && textOrTagsOk
   })
   
   console.log('Filtered results:', filtered.length)

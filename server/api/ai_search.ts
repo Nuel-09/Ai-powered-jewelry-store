@@ -7,8 +7,10 @@ export default defineEventHandler(async (event) => {
     }
 
     const {cfAccountId, cfApiToken} = useRuntimeConfig()
-    if (!cfAccountId || cfApiToken) {
-        throw createError({ statusCode: 500, statusMessage: 'Missing Cloudflare credentials'})
+    // If credentials are missing, fail soft with empty results so the app doesn't break in dev
+    if (!cfAccountId || !cfApiToken) {
+        console.warn('[AI Search] Missing Cloudflare credentials. Set CF_ACCOUNT_ID and CF_API_TOKEN to enable AI ranking.')
+        return { ids: [], results: [] }
     }
 
     // keep payload lean to reduce tokens
@@ -25,16 +27,27 @@ Consider name, tags, description and price constraints.`
 
     const endpoint = `https://api.cloudflare.com/client/v4/accounts/${cfAccountId}/ai/run/@cf/meta/llama-3.1-8b-instruct`
 
-    const res = await $fetch<{ result: { response: string } }>(endpoint, {
-        method: `POST`,
-        headers: { Authorization: `Bearer ${cfApiToken}`},
-        body: { message: [{ role: 'system', content: system}, { role: 'user', content: user} ]},
-        timeout: 12000
-    })
+    let res: { result?: { response?: string } } = {}
+    try {
+        res = await $fetch<{ result: { response: string } }>(endpoint, {
+            method: `POST`,
+            headers: { Authorization: `Bearer ${cfApiToken}`},
+            body: { message: [{ role: 'system', content: system}, { role: 'user', content: user} ]},
+            timeout: 12000
+        })
+    }
+    catch (err) {
+        // Network/API error – log and return empty results to avoid throwing 500s during development
+        console.error('[AI Search] Cloudflare API request failed:', err)
+        return { ids: [], results: [] }
+    }
 
     const text = res?.result?.response?.trim() || '[]'
     let ids: number[] = []
-    try { ids = JSON.parse(text) } catch { ids = [] }
+    try { ids = JSON.parse(text) } catch (e) { 
+        console.warn('[AI Search] Model response was not valid JSON array. Raw text:', text)
+        ids = [] 
+    }
 
     const idSet = new Set(ids)
     const ranked = body.products
