@@ -4,6 +4,7 @@
     <ul class="flex space-x-6 text-gray-700 font-medium">
       <li><NuxtLink to="/">Home</NuxtLink></li>
       <li><NuxtLink to="/products">Products</NuxtLink></li>
+      <li><NuxtLink to="/products-details">Products-details</NuxtLink></li>
       <li><NuxtLink to="/about">About</NuxtLink></li>
       <li><NuxtLink to="/contact">Contact</NuxtLink></li>
     </ul>

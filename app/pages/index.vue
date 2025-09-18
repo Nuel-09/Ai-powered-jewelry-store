@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { products } from '~/data/products'
+import { products } from '../data/products'
+import Header from '../components/Header.vue'
+import ProductGrid from '../components/productGrid.vue'
+import { useHead } from '@unhead/vue'
+
 useHead({title: 'Home'})
-const featuredProducts = products.slice(0, 6) 
-fetch("/api")
+const featuredProducts = products.slice(0, 6)
 </script>
 
 
