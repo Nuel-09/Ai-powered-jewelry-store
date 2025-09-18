@@ -1,5 +1,4 @@
 <template>
-  <div data-marker="APP PRODUCTS PAGE"></div>
     <Header />
     <h1>Products</h1>
   <div class="container mx-auto max-w-7xl px-6 py-8 space-y-8">
@@ -12,26 +11,38 @@
       />
       <button
         class="rounded-md border px-3 py-2 text-sm"
-        @click="() => { query = ''; selected = null }"
-      >
+        @click="() => { query = ''; selected = null }">
         Clear
       </button>
-      <!-- Toggle button -->
-<filterToggle :count="activeFilterCount" @toggle="showFilters = !showFilters" />
+      <!-- Toggle button (floating) -->
+      <div class="fixed top right-10 z-40">
+        <filterToggle :count="activeFilterCount" @toggle="showFilters = !showFilters" />
+      </div>
+
+<AiAssistant :products="products" />
 
 
 
-<div v-if="showFilters" class="z-20 mt-3">
-  <advancedFilters
-    v-model="filters"
-    :products="products"
-    @update:modelValue="handleFilterUpdate"
-    />
-</div>
+<transition name="afade">
+  <div v-show="showFilters" class="fixed bottom-24 right-24 z-40 w-[92vw] max-w-md rounded-xl overflow-hidden shadow-2xl border bg-white">
+    <div class="p-3 text-white flex items-center justify-between" style="background: linear-gradient(90deg, #C98D54 0%, #B98A2A 35%, #C8AC5F 65%, #275B32 100%);">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">💎</span>
+        <h3 class="font-semibold">Advanced Filters</h3>
+      </div>
+      <button class="text-white/90 hover:text-white" @click="showFilters = false" aria-label="Close filters">✕</button>
     </div>
-    <div class="text-xs text-gray-500">
-      Debug: {{ activeFilterCount }} filters active · Tags: {{ filters.tags.length }}, Max: ${{ filters.maxPrice }}, Terms: "{{ filters.terms }}" · Visible: {{ visible.length }}
+    <div class="p-4 max-h-[70vh] overflow-y-auto">
+      <advancedFilters
+        v-model="filters"
+        :products="products"
+        @update:modelValue="handleFilterUpdate"
+      />
     </div>
+  </div>
+  </transition>
+    </div>
+    
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" v-if="visible.length">
       <ProductCard v-for="p in visible" :key="p.id" :product="p" />
     </div>
@@ -197,3 +208,8 @@ const shown = computed(() => aiResults.value?.length ? aiResults.value : visible
 useHead({ title: 'Products'})
 
 </script>
+
+<style scoped>
+.afade-enter-active, .afade-leave-active { transition: all .2s ease; }
+.afade-enter-from, .afade-leave-to { opacity: 0; transform: translateY(8px) scale(.98); }
+</style>

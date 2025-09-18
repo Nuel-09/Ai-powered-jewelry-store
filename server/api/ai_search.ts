@@ -17,10 +17,11 @@ export default defineEventHandler(async (event) => {
     const compact = body.products.map(p => ({
         id: p.id, name: p.name, price: p.price, tags: p.tags ?? [], description: p.description ?? ''
     }))
-
+// client prompt for Ai model deep search
     const system = `You rank jewellery products for a storefront.
 Return ONLY a JSON array of product ids best matching the user query.
-Consider name, tags, description and price constraints.`
+Consider name, tags, description and price constraints.
+STRICT OUTPUT RULES: Return ONLY a raw JSON object, no prose, no code fences, no markdown.`
 
     const user = `user query: ${body.query}
     products: ${JSON.stringify(compact).slice(0, 12000)}`
