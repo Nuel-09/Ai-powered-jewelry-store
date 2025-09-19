@@ -33,7 +33,7 @@
       <transition name="afade">
         <div
           v-show="showFilters"
-          class="fixed inset-x-4 bottom-20 z-40 max-h-[80vh] rounded-xl overflow-hidden shadow-2xl border bg-white sm:inset-auto sm:bottom-24 sm:right-24 sm:w-[92vw] sm:max-w-md"
+          class="fixed inset-x-4 top-20 z-40 max-h-[60vh] rounded-xl overflow-hidden shadow-2xl border bg-white sm:inset-auto sm:bottom-24 sm:top-auto sm:right-24 sm:w-[92vw] sm:max-w-md sm:max-h-[70vh]"
         >
           <div
             class="p-3 text-white flex items-center justify-between"
@@ -62,7 +62,9 @@
               ✕
             </button>
           </div>
-          <div class="p-4 max-h-[70vh] overflow-y-auto overflow-x-hidden">
+          <div
+            class="p-4 max-h-[50vh] overflow-y-auto overflow-x-hidden sm:max-h-[60vh]"
+          >
             <advancedFilters
               v-model="filters"
               :products="products"
