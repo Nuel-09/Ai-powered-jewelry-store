@@ -3,8 +3,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
+    "build": "node init && nuxt build",
+    "dev": "node init && nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -12,6 +12,8 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
     "@vueuse/core": "^13.9.0",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2",
     "nuxt": "^4.1.1",
     "tailwindcss": "^4.1.13",
     "vue": "^3.5.21",
