@@ -1,5 +1,5 @@
 <template>
-    <div class="relative">
+    <div class="flex">
       <label class="sr-only" for="smart-search">Search</label>
       <input
         id="smart-search"
