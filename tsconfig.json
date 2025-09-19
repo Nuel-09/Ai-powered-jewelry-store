@@ -16,7 +16,7 @@
     }
   ],
   "compilerOptions": {
-    "types": ["nodes"],
+    "types": ["node"],
 
     "paths": {
       "~/*": ["./app/*"],

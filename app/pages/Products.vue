@@ -43,11 +43,15 @@
   </transition>
     </div>
     
+    <div v-if="aiResults && aiResults.length && !hasActiveFilters" class="-mt-4">
+      <span class="inline-flex items-center rounded-full border px-3 py-1 text-xs text-blue-700">AI results</span>
+    </div>
+    
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" v-if="visible.length">
       <ProductCard v-for="p in visible" :key="p.id" :product="p" />
     </div>
     <div v-else-if="!loading" class="text-sm text-gray-500">
-      Nothing matches your search.
+      Nothing matches your search, you can use our AI assistant to find the best products for you.
     </div>
  
     <div v-if="showLoading">Searching with AI…</div>
@@ -137,8 +141,6 @@ const baseResults = computed(() => {
 })
 
 const visible = computed(() => {
-  console.log('Products page – filtering with:', JSON.parse(JSON.stringify(filters)))
-  console.log('Base results count:', baseResults.value.length)
   const out = baseResults.value.filter((p: any) => {
     const priceOk = p.price <= filters.maxPrice
     const normalized = (p.tags ?? []).map((t: string) => t.trim().toLowerCase())
@@ -148,10 +150,8 @@ const visible = computed(() => {
     const termsOk = matchesText(p, filters.terms, filters.includeDescription)
     const textOrTagsOk = tagsOk || termsOk
     const keep = priceOk && textOrTagsOk // price is mandatory
-    if (!keep) console.log('Filtered out:', p.name, { priceOk, tagsOk, termsOk, textOrTagsOk, productTags: p.tags, filterTags: filters.tags })
     return keep
   })
-  console.log('Filtered results count:', out.length)
   return out
 })
 
@@ -195,15 +195,11 @@ watch(loading, (isloading) => {
         showLoading.value = true
     }
     else{
-        const MIN = 8000
+        const MIN = 2000
         const elapsed = Date.now() - startedAt
         setTimeout(() => {showLoading.value = false }, Math.max(0, MIN -elapsed))
     }
 })
-
-const shown = computed(() => aiResults.value?.length ? aiResults.value : visible.value) // show ai block first then fallback to loacl if fail
-
-
 
 useHead({ title: 'Products'})
 

@@ -1,22 +1,22 @@
 <template>
-    <article class="group rounded-lg bg-white overflow-hidden shadow-sm transition duration-300 ease-out hover:shadow-xl hover:-translate-y-1">
-        <NuxtImg
-        :src="imageToShow"
-        placeholder
-        sizes="sm:100vw md:50vw lg:33vw0"
-        :alt="product.name"
-        class="w-full h-auto transition-transform duration-500 ease-out group-hover:scale-105"
-        />
-        <div class="p-4">
-            <h3 class="font-semibold text-gray-900 transition-colors duration-300 line-clamp-1 group-hover:text-green-800">
-                {{ product.name }}
-            </h3>
-            <p class="mt-1 text-gray-700">{{ product.price }}</p>
-            <NuxtLink :to="`/products-details?id=${product.id}`" class="mt-3 inline-block text-sm text-green-800 hover:underline">
-                view details
-            </NuxtLink>
-        </div>
-    </article>
+    <NuxtLink :to="`/products/${product.id}`" class="block" aria-label="View details">
+        <article class="group rounded-lg bg-white overflow-hidden shadow-sm transition duration-300 ease-out hover:shadow-xl hover:-translate-y-1">
+            <NuxtImg
+            :src="imageToShow"
+            placeholder
+            sizes="sm:100vw md:50vw lg:33vw"
+            :alt="product.name"
+            class="w-full h-auto transition-transform duration-500 ease-out group-hover:scale-105"
+            />
+            <div class="p-4">
+                <h3 class="font-semibold text-gray-900 transition-colors duration-300 line-clamp-1 group-hover:text-green-800">
+                    {{ product.name }}
+                </h3>
+                <p class="mt-1 text-gray-700">{{ formatPrice(product.price) }}</p>
+                <span class="mt-3 inline-block text-sm text-green-800 group-hover:underline">View details</span>
+            </div>
+        </article>
+    </NuxtLink>
 </template>
 
 <script setup lang="ts">
@@ -31,5 +31,8 @@ const imageToShow = computed(() =>
     ? props.product.image
     : '/images/placeholder.jpg'
 )
+
+const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' })
+const formatPrice = (value: number) => gbp.format(value)
 
 </script>

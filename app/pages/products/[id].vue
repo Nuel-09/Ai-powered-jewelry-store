@@ -43,11 +43,11 @@
           </div>
           <NuxtLink to="/products" class="text-sm text-green-800 hover:underline">Browse all</NuxtLink>
         </div>
-          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div v-for="(p, i) in related" :key="p.id" v-reveal :data-reveal-delay="(i%4)*80 + 'ms'">
-              <ProductCard :product="p" />
-            </div>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div v-for="(p, i) in related" :key="p.id" v-reveal :data-reveal-delay="(i%4)*80 + 'ms'">
+            <ProductCard :product="p" />
           </div>
+        </div>
       </section>
 
       <!-- Assistant -->
@@ -55,18 +55,18 @@
     </div>
   </div>
 </template>
-  
+
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useHead, useRoute } from '#imports'
-import { products } from '../data/products'
-import Header from '../components/Header.vue'
-import ProductCard from '../components/productCard.vue'
-import AiAssistant from '../components/AiAssistant.vue'
+import { products } from '@/data/products'
+import Header from '@/components/Header.vue'
+import ProductCard from '@/components/productCard.vue'
+import AiAssistant from '@/components/AiAssistant.vue'
 import { useCart } from '@/composables/useCart'
 
 const route = useRoute()
-const id = computed(() => Number(route.query.id || 0))
+const id = computed(() => Number(route.params.id || 0))
 const product = computed(() => products.find(p => p.id === id.value) || products[0])
 const productTags = computed(() => (product.value?.tags ?? []))
 
@@ -76,13 +76,15 @@ const related = computed(() => {
   return matches.slice(0, 8)
 })
 
-useHead({ title: product.value?.name ? `${product.value.name}` : 'Product Details' })
+const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' })
+const formatPrice = (value: number) => gbp.format(value)
 const { add } = useCart()
 function addToCart() { if (product.value) add(product.value, 1) }
 
-const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' })
-const formatPrice = (value: number) => gbp.format(value)
+useHead({ title: product.value?.name ? `${product.value.name}` : 'Product Details' })
 </script>
 
 <style scoped>
 </style>
+
+

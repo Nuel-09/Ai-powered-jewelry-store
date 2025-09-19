@@ -17,6 +17,7 @@
       <div
         v-if="open && results.length > 0"
         class="absolute z-10 mt-1 w-full rounded-md border bg-white shadow-lg"
+        data-smart-search-panel
         @mousedown.prevent
       >
         <ul class="max-h-72 overflow-auto py-1">
@@ -39,7 +40,7 @@
               />
               <div class="flex-1">
                 <p class="font-medium text-gray-900">{{ item.name }}</p>
-                <p class="text-sm text-gray-600">${{ item.price }}</p>
+                <p class="text-sm text-gray-600">{{ formatPrice(item.price) }}</p>
               </div>
             </div>
           </li>
@@ -100,6 +101,9 @@
     return scored
   })
   
+  const gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' })
+  const formatPrice = (value: number) => gbp.format(value)
+
   // Click outside to close
   onMounted(() => {
     const handler = (e: MouseEvent) => {

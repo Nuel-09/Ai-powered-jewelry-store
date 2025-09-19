@@ -74,6 +74,16 @@
         </button>
       </div>
 
+      <!-- Non-intrusive error state -->
+      <div
+        v-if="error"
+        class="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700"
+        role="status"
+        aria-live="polite"
+      >
+        {{ error }}
+      </div>
+
       <div v-if="reply" class="space-y-3">
         <!-- image strip -->
         <div v-if="thumbs.length" class="flex items-center gap-2 overflow-x-auto pb-1">

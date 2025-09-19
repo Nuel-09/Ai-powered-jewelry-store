@@ -32,8 +32,8 @@ STRICT OUTPUT RULES: Return ONLY a raw JSON object, no prose, no code fences, no
     try {
         res = await $fetch<{ result: { response: string } }>(endpoint, {
             method: `POST`,
-            headers: { Authorization: `Bearer ${cfApiToken}`},
-            body: { message: [{ role: 'system', content: system}, { role: 'user', content: user} ]},
+            headers: { Authorization: `Bearer ${cfApiToken}` },
+            body: { messages: [{ role: 'system', content: system }, { role: 'user', content: user }] },
             timeout: 12000
         })
     }

@@ -134,7 +134,6 @@ function reset() {
 }
 
 function apply() {
-  console.log('Applying filters:', localFilters) // Debug log
   emit('update:modelValue', {
     tags: [...localFilters.tags],
     maxPrice: localFilters.maxPrice,
